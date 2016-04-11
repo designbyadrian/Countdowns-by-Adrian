@@ -37,6 +37,14 @@ var countdowns = {
 
 		});
 
+		$("#clearDB").click(function(){
+			if(confirm("Are you sure you want to clear your countdown database?")) {
+				localforage.clear(function(){
+					window.location.reload();
+				});
+			}
+		});
+
 		this.drawTimers().then(function(){
 			_this.loop();
 		});
