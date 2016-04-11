@@ -45,6 +45,15 @@ var countdowns = {
 			}
 		});
 
+		$(document).on('click','.delete',function(){
+			var data = $(this).closest('.timer').data();
+
+			if(confirm("Are you sure you want to delete \""+data.title+"\"?")) {
+				_this.deleteTimer(data.id);
+			}
+
+		});
+
 		this.drawTimers().then(function(){
 			_this.loop();
 		});
@@ -59,6 +68,7 @@ var countdowns = {
 			}
 
 			data.timers.push({
+				id: +new Date(),
 				title: title,
 				date: date
 			});
@@ -70,6 +80,24 @@ var countdowns = {
 		});
 
 		return d.promise();
+	},
+	deleteTimer: function(id){
+		localforage.getItem("timers").then(function(data){
+			if(!data) {
+				data = {timers:[]};
+			}
+
+			for(var i=0,ii=data.timers.length;i<ii;i++) {
+				if(data.timers[i].id == id) {
+					data.timers.splice(i,1);
+					break;
+				}
+			}
+
+			localforage.setItem("timers",data).then(function(){
+				window.location.reload();
+			});
+		});
 	},
 	drawTimers: function(){
 		var _this = this,
@@ -91,7 +119,11 @@ var countdowns = {
 				$.each(data.timers,function(){
 					var $timer = _this.timerPrototype.clone();
 
-					$timer.data('date',this.date).find('h2').text(this.title);
+					$timer.data({
+						'date': 	this.date,
+						'id': 		this.id,
+						'title': 	this.title
+					}).find('.title').text(this.title);
 
 					_this.timers.prepend($timer);
 				});
