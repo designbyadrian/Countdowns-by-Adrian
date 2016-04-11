@@ -31,7 +31,7 @@ var gulp = require('gulp'),
 		'./bower_components/jquery/dist/jquery.min.js',
 		'./bower_components/localforage/dist/localforage.min.js',
 		'./bower_components/moment/min/moment.min.js',
-		'./bower_components/pikaday/pikaday.js'
+		'./bower_components/pikaday-time/pikaday.js'
 	],
 	fonts = {
 		src: [
