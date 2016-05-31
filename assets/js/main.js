@@ -141,7 +141,7 @@ var countdowns = {
 		var _this = this;
 
 		_this.counter++;
-		if(_this.counter>20) {
+		if(_this.counter>60) {
 			_this.counter = 0;
 		}
 
